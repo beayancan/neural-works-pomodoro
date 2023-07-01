@@ -1,0 +1,14 @@
+{
+  "name": "neuralworks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "if-env TYPE=server && (cd server && yarn install) || (cd client && yarn install)",
+    "server": "node ./server/server.js",
+    "client": "cd client && yarn start"
+  },
+  "dependencies": {
+    "if-env": "1.0.4"
+  }
+}
