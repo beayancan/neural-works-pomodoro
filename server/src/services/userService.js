@@ -38,8 +38,6 @@ const getUserByEmail = async (email) => {
     throw new Error('Usuario no encontrado');
   }
 
-  console.log('usersByEmail', usersByEmail);
-
   return usersByEmail[0];
 }
 

@@ -2,7 +2,6 @@ import pomodoroService from '../services/pomodoroService.js'
 
 const getPomodoros = async(req, res) => {
   try {
-    console.log('req', req)
     const pomodoro = await pomodoroService.getPomodoros();
     res.json(pomodoro)
   } catch (e) {
