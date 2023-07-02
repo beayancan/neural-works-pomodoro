@@ -18,7 +18,7 @@ export const App = () => {
         <Route path="/" element={<Login setUserInfo={setUserInfo} />} />
         <Route path="/main" element={(userInfo.email) ? <HomeView userId={userInfo.id} userEmail={userInfo.email} /> : <p>error</p>} />
         <Route path="/pomodoro/create" element={<NewPomodoro userId={userInfo.id} />} />
-        <Route path="/pomodoro/:pomodoroId" element={<EditPomodoro userEmail={userInfo.email} />} />
+        <Route path="/pomodoro/:pomodoroId" element={<EditPomodoro />} />
       </Routes>
     </Router>
   );

@@ -1,39 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { baseURL } from '../config';
 import { PomodoroForm } from '../components/PomodoroForm';
+import { PomodorosService } from '../services/pomodoros';
+import { PomodoroCreation } from '../interfaces/pomodoros';
 
-interface PomodoroCreation {
-  userId: string,
-  duration: number | string;
-  rest: number | string;
-  startTime: Date | null;
-}
+const pomodoroMock = { duration: '', rest: '', startTime: null};
 
 export const NewPomodoro = (props: { userId: string }) => {
   const { userId } = props;
   const navigate = useNavigate();
-  const [pomodoro, setPomodoro] = useState<PomodoroCreation>({ userId, duration: '', rest: '', startTime: null})
+  const [pomodoro, setPomodoro] = useState<PomodoroCreation>({ ...pomodoroMock, userId })
 
   const handleOnSubmit = async (event: any) => {
     event.preventDefault();
-
-    try {
-      const response = await fetch(`${baseURL}/pomodoros`, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...pomodoro, duration: +pomodoro.duration, rest: +pomodoro.rest }),
-      }).then(data => data.json());
-    } catch (error) {
-      console.error(error)
+    const body = { ...pomodoro, duration: +pomodoro.duration, rest: +pomodoro.rest };
+    const response = await PomodorosService.createPomodoro(body);
+    if (response) {
+      navigate('/main');
     }
-
-    navigate('/main');
   }
 
   return (

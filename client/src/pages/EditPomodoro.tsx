@@ -1,25 +1,20 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { baseURL } from '../config';
 import { PomodoroForm } from '../components/PomodoroForm';
+import { PomodorosService } from '../services/pomodoros';
 
-export const EditPomodoro = (props: { userEmail: string }) => {
-
+export const EditPomodoro = () => {
   const params = useParams();
   const { pomodoroId } = params;
-  const { userEmail } = props;
   const navigate = useNavigate();
   const [pomodoro, setPomodoro] = useState({ id: null, duration: '', rest: '' });
 
   const getPomodoroData = async () => {
-    try {
-      const response = await fetch(`${baseURL}/pomodoros/${pomodoroId}`)
-        .then(data => data.json());
+    const response = await PomodorosService.getPomodoro(pomodoroId);
+    if (response) {
       setPomodoro({
         ...response,
-      })
-    } catch (error) {
-      console.log(error);
+      });
     }
   }
 
@@ -29,25 +24,11 @@ export const EditPomodoro = (props: { userEmail: string }) => {
 
   const handleOnSubmit = async (event: any) => {
     event.preventDefault();
-
-    console.log('{ ...pomodoro, duration: +pomodoro.duration, rest: +pomodoro.rest }', { ...pomodoro, duration: +pomodoro.duration, rest: +pomodoro.rest });
-
-    try {
-      const response = await fetch(`${baseURL}/pomodoros/${pomodoro.id}`, {
-        method: 'PUT',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...pomodoro, duration: +pomodoro.duration, rest: +pomodoro.rest }),
-      }).then(data => data.json());
-      console.log('response', response);
-    } catch (error) {
-      console.error(error)
+    const body = { ...pomodoro, duration: +pomodoro.duration, rest: +pomodoro.rest };
+    const response: Object | null = await PomodorosService.editPomodoro(pomodoro.id, body);
+    if (response) {
+      navigate('/main');
     }
-
-    navigate('/main');
   }
 
   return (

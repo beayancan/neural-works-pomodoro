@@ -7,13 +7,11 @@ export const HomeView = (props: { userId: string, userEmail: string }) => {
   const navigate = useNavigate();
 
   const handleOnCreate = () => {
-    console.log('handleOnCreate');
     navigate('/pomodoro/create')
   }
 
   return (
     <div>
-      { `Bienvenid@ ${userId}`}
       <DisplayPomodoros userId={userId} userEmail={userEmail} />
       <Button
         variant="outlined"

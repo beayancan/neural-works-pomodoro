@@ -2,9 +2,9 @@ import { Grid, Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { userInfo } from '../interfaces/login.interface';
-import { baseURL } from '../config';
+import { userInfo } from '../interfaces/pomodoros';
 import { handleOnChange } from '../utils/forms';
+import { PomodorosService } from '../services/pomodoros';
 
 export const Login = (props: any) => {
   const navigate = useNavigate();
@@ -17,16 +17,7 @@ export const Login = (props: any) => {
     event.preventDefault();
 
     const body = { email: loginData.email };
-
-    const response = await fetch(`${baseURL}/login`, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    }).then(data => data.json());
+    const response = await PomodorosService.login(body);
 
     if (response && response.email && response.id){
       setUserInfo({
@@ -34,7 +25,6 @@ export const Login = (props: any) => {
         id: response.id
       });
     }
-
     navigate('/main')
   }
 

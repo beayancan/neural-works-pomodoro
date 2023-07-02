@@ -61,7 +61,7 @@ export const PomodoroForm = (props: { pomodoro: any, setPomodoro: any, handleOnS
           <Grid item xs={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDateTimePicker
-                defaultValue={dayjs((new Date()).toString())}
+                defaultValue={dayjs((pomodoro.startTime ? new Date(pomodoro.startTime) : new Date()).toString())}
                 onChange={(value) => value}
                 onAccept={(value: any) => handleChangeDate(value['$d'], setPomodoro)}
               />
