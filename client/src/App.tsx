@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Login } from './pages/Login';
-import { MainView } from './pages/Home';
+import { HomeView } from './pages/Home';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,7 +16,7 @@ export const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login setUserInfo={setUserInfo} />} />
-        <Route path="/main" element={(userInfo.email) ? <MainView userId={userInfo.id} userEmail={userInfo.email} /> : <p>error</p>} />
+        <Route path="/main" element={(userInfo.email) ? <HomeView userId={userInfo.id} userEmail={userInfo.email} /> : <p>error</p>} />
         <Route path="/pomodoro/create" element={<NewPomodoro userId={userInfo.id} />} />
         <Route path="/pomodoro/:pomodoroId" element={<EditPomodoro userEmail={userInfo.email} />} />
       </Routes>
