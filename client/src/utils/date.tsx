@@ -12,8 +12,8 @@ export const formatterTime = (value: Date) => {
 
 export const formatterDate = (value: Date) => {
   const date = new Date(value);
-  const day = dateNumberFormatter(date.getDay());
-  const month = dateNumberFormatter(date.getMonth());
+  const day = dateNumberFormatter(date.getDay()+1);
+  const month = dateNumberFormatter(date.getMonth()+1);
   const year = date.getFullYear();
 
   return `${day}/${month}/${year}`;
@@ -24,4 +24,8 @@ export const formatterTimeWithDate = (value: Date) => {
   const timeFormatted = formatterTime(value);
 
   return `${timeFormatted} (${dateFormatted})`;
+}
+
+export const addMinutes = (date: Date, minutes: number) => {
+  return new Date(date.getTime() + minutes*60000);
 }

@@ -48,4 +48,20 @@ const subscribePomodoro = async(req, res) => {
   }
 }
 
-export default { getPomodoros, getPomodoroById, getUserPomodoros, createPomodoro, subscribePomodoro };
+const editPomodoroById = async(req, res) => {
+  try {
+    const pomodoro = await pomodoroService.editPomodoro(req.params.id, req.body);
+    res.json(pomodoro)
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+}
+
+export default {
+  getPomodoros,
+  getPomodoroById,
+  getUserPomodoros,
+  createPomodoro,
+  subscribePomodoro,
+  editPomodoroById,
+};
