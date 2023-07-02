@@ -1,4 +1,3 @@
-import moment from "moment"
 import { addMinutes } from '../utils/utils.js'
 
 const pomodoros = {
@@ -6,8 +5,6 @@ const pomodoros = {
     id: '1',
     userId: '1',
     startTime: new Date('2023-06-27T10:00:00Z'),
-    restTime: new Date('2023-06-27T10:25:00Z'),
-    endTime: new Date('2023-06-27T10:30:00Z'),
     duration: 25,
     rest: 5,
     status: 'completed',
@@ -24,8 +21,6 @@ const pomodoros = {
     id: '2',
     userId: '1',
     startTime: new Date('2023-06-27T11:00:00Z'),
-    restTime: new Date('2023-06-27T11:15:00Z'),
-    endTime: new Date('2023-06-27T11:20:00Z'),
     duration: 15,
     rest: 5,
     subscribers: [],
@@ -56,27 +51,38 @@ const createPomodoro = async ({ userId, duration, rest, startTime }) => {
   if (!userId || !duration || !rest || !startTime){
     throw Error('Invalid parameters');
   }
+
   const id = `${Object.keys(pomodoros).length + 1}`;
   let newDate = startTime;
   if (typeof(startTime) === 'string'){
     newDate = new Date(startTime);
   }
 
-  
-
-  const restTime = addMinutes(newDate, duration);
-  const endTime = addMinutes(newDate, duration + rest);
   const newPomodoro = {
     id,
     userId,
     duration,
     rest,
     startTime: newDate,
-    restTime,
-    endTime,
     subscribers: []
   };
   pomodoros[id] = newPomodoro;
+  return pomodoros;
+}
+
+const editPomodoro = async (pomodoroId, body) => {
+
+  const pomodoro = pomodoros[pomodoroId];
+
+  if (!pomodoro) {
+    throw new Error('Pomodoro no encontrado.')
+  }
+
+  pomodoros[pomodoroId] = {
+    ...pomodoro,
+    ...body
+  };
+
   return pomodoros;
 }
 
@@ -108,5 +114,6 @@ export default {
   getPomodoroById,
   getUserPomodoros,
   createPomodoro,
-  subscribeToPomodoro
+  subscribeToPomodoro,
+  editPomodoro,
 };
