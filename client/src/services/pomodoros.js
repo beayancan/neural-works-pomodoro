@@ -13,15 +13,11 @@ export const PomodorosService = {
         },
         body: JSON.stringify(body),
       }).then(data => data.json());
-
       return response;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-
-    
   },
-
   getPomodoro: async (pomodoroId) => {
     try {
       const response = await fetch(`${baseURL}/pomodoros/${pomodoroId}`)
@@ -31,7 +27,6 @@ export const PomodorosService = {
       console.error(error);
     }
   },
-
   editPomodoro: async (pomodoroId, body) => {
     try {
       const response = await fetch(`${baseURL}/pomodoros/${pomodoroId}`, {
@@ -45,10 +40,9 @@ export const PomodorosService = {
       }).then(data => data.json());
       return response;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
-
   createPomodoro: async (body) => {
     try {
       const response = await fetch(`${baseURL}/pomodoros`, {
@@ -62,10 +56,9 @@ export const PomodorosService = {
       }).then(data => data.json());
       return response;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
-
   displayPomodoros: async (userId, currentTime) => {
     try {
       const allPomodoros = await fetch(`${baseURL}/pomodoros/user/${userId}`)
@@ -76,7 +69,7 @@ export const PomodorosService = {
       });
 
       const filteredPomodoros = sortedPomodoros.filter(pomodoro => {
-        return addMinutes(new Date(pomodoro.startTime), +pomodoro.rest + +pomodoro.duration) >= currentTime
+        return addMinutes(new Date(pomodoro.startTime), +pomodoro.rest + +pomodoro.duration) >= currentTime;
       });
 
       const filteredPomodorosByStartTime = sortedPomodoros.filter(pomodoro => (new Date(pomodoro.startTime) >= currentTime));
@@ -87,8 +80,7 @@ export const PomodorosService = {
         const difference = closestPomodoroTime.getTime() - currentTime.getTime();
         resultInMinutes = Math.floor(difference / 60000);
       }
-
-      return { filteredPomodoros, resultInMinutes }
+      return { allPomodoros: sortedPomodoros, filteredPomodoros, resultInMinutes };
     } catch (error) {
       console.error(error);
     }

@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react';
+
+import { Alert, AlertTitle, Grid } from '@mui/material';
+
 import { PomodoroCard } from './PomodoroCard';
 import { PomodorosService } from '../services/pomodoros';
 
@@ -8,14 +11,14 @@ export const DisplayPomodoros = (props: { userId: string, userEmail: string }) =
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const [remainingTime, setRemainingTime] = useState<number | null>(15);
 
-  const getHistorialPomodoro = async () => {
+  const getHistorialPomodoro = useCallback(async () => {
     const response = await PomodorosService.displayPomodoros(userId, currentTime);
     if (response) {
-      const { filteredPomodoros, resultInMinutes } = response;   
-      setHistorial(filteredPomodoros);
+      const { allPomodoros, resultInMinutes } = response;   
+      setHistorial(allPomodoros);
       setRemainingTime(resultInMinutes);
     }
-  }
+  }, [userId, currentTime, setHistorial, setRemainingTime]);
 
   useEffect(() => {
     const interval = setInterval(() => {setCurrentTime(new Date())}, 60000);
@@ -24,20 +27,32 @@ export const DisplayPomodoros = (props: { userId: string, userEmail: string }) =
 
   useEffect(() => {
     getHistorialPomodoro();
-  }, [currentTime]);
+  }, [getHistorialPomodoro, currentTime]);
 
   return (
     <>
-      <p>{ !remainingTime ? `No hay pomodoros pendientes` : `Faltan ${remainingTime} minutos para el siguiente Pomodoro` }</p>
-      {
-        historial.map((pomodoro, index): any => (
-          <PomodoroCard
-            key={`pomodoro-card-${index}`}
-            pomodoro={pomodoro}
-            userEmail={userEmail}
-          />
-        ))
-      }
+      { !remainingTime ? (
+        <Alert severity="success">
+          <AlertTitle>¡Excelente!</AlertTitle>
+          No te quedan Pomodoros pendientes
+        </Alert>
+      ) : (
+        <Alert severity="info">
+          <AlertTitle>Próximos Pomodoros</AlertTitle>
+          Falta{remainingTime > 1 ? 'n' : ''} <strong>{ remainingTime } minuto{remainingTime > 1 ? 's' : ''}</strong> para el siguiente Pomodoro a tomar.
+        </Alert>
+      )}
+      <Grid container spacing={2}>
+        {
+          historial.map((pomodoro, index): any => (
+            <PomodoroCard
+              key={`pomodoro-card-${index}`}
+              pomodoro={pomodoro}
+              userEmail={userEmail}
+            />
+          ))
+        }
+      </Grid>
     </>
   )
 }

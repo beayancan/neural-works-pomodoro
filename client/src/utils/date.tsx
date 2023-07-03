@@ -12,7 +12,7 @@ export const formatterTime = (value: Date) => {
 
 export const formatterDate = (value: Date) => {
   const date = new Date(value);
-  const day = dateNumberFormatter(date.getDay()+1);
+  const day = dateNumberFormatter(date.getDate());
   const month = dateNumberFormatter(date.getMonth()+1);
   const year = date.getFullYear();
 

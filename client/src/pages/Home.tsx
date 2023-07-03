@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+
+import { Box, Paper, Typography } from '@mui/material'
+
+import { ActionMainButton } from '../components/ActionMainButton';
 import { DisplayPomodoros } from '../components/DisplayPomodoros';
-import { Button } from '@mui/material';
 
 export const HomeView = (props: { userId: string, userEmail: string }) => {
   const { userId, userEmail } = props;
@@ -11,14 +14,16 @@ export const HomeView = (props: { userId: string, userEmail: string }) => {
   }
 
   return (
-    <div>
-      <DisplayPomodoros userId={userId} userEmail={userEmail} />
-      <Button
-        variant="outlined"
-        onClick={handleOnCreate}
-      >
-        Crear Pomodoro
-      </Button>
-    </div>
-  )
+    <Box style={{ margin: '2rem' }}>
+      <Paper elevation={1} style={{ padding: '2rem' }}>
+        <Box style={{ marginBottom: '1rem' }}>
+          <Typography variant="h4">
+            Neural Works Pomodoros
+          </Typography>
+        </Box>
+        <DisplayPomodoros userId={userId} userEmail={userEmail} />
+        <ActionMainButton title={`Crear Pomodoro`} onClick={handleOnCreate} />
+      </Paper>
+    </Box>
+  );
 }
