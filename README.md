@@ -32,13 +32,19 @@ Desde la terminal de comando, en la carpeta base del proyecto se deben correr
 
 > yarn install
 
-> yarn build
+Luego, abrir dos terminales y ejecutar en una de ellas
 
-Luego, abrir dos terminales y ejecutar en cada una
+> yarn build-server
+
+> yarn start-server
+
+Mientras que en la terminal, se debe ejecutar:
+
+> yarn build-client
 
 > yarn start-client
 
-> yarn start-server
+La instalación e inicio del `client` puede tomar algunos segundos en ejecutarse.
 
 ---
 
