@@ -30,30 +30,53 @@ Mejoras
 
 Desde la terminal de comando, en la carpeta base del proyecto se deben correr
 
-> yarn install
+```
+yarn install
+```
 
-> yarn build
+Luego, abrir dos terminales y ejecutar en una de ellas
 
-Luego, abrir dos terminales y ejecutar en cada una
+```
+yarn build-server
+```
 
-> yarn start-client
+```
+yarn start-server
+```
 
-> yarn start-server
+Mientras que en la terminal, se debe ejecutar:
+
+```
+yarn build-client
+```
+
+```
+yarn start-client
+```
+
+La instalación e inicio del `client` puede tomar algunos segundos en ejecutarse.
 
 ---
 
 Alternativamente, dentro de la carpeta `server` correr en una terminal
 
-> yarn install
+```
+yarn install
+```
 
-> yarn start
+```
+yarn start
+```
 
 Y luego, en otra terminal dentro de la carpeta `client` utilizar
 
-> yarn install
+```
+yarn install
+```
 
-> yarn start
-
+```
+yarn start
+```
 ---
 
 Al iniciar la aplicación, se debe ingresar un correo de usuario válido, por ejemplo `uno@email.com`. Lo que identificará que se trata de los pomodoros del usuario con ese correo.

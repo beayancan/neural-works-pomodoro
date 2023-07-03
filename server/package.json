@@ -1,6 +1,6 @@
 {
-  "name": "server",
-  "version": "1.0.0",
+  "name": "neural-works-pomodoros-mfe",
+  "version": "0.1.0",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
